@@ -20,15 +20,31 @@
 - librealsense v2.53.1：pybind11 / pyrs_device 編譯修正（T265 只支援到 2.53.1）
 
 ## 搬到新筆電
-1. 裝 Ubuntu 24.04、NVIDIA driver、CUDA、ROS 2 Jazzy (desktop)。
-2. 裝 ZED SDK 5.5.0：安裝檔在 HDD `/mnt/hdd/linux_data/installers/ZED_SDK_Ubuntu24_cuda13.0_tensorrt10.13_v5.5.0.zstd.run`
-   （或官網下載同版本），`chmod +x` 後執行。
-3. ```bash
-   git clone <這個 repo> ~/sensor_rec      # 一定要放 ~/sensor_rec
-   ~/sensor_rec/install.sh
-   ```
-4. 在 `~/.bashrc` 不需要加任何東西，rec_all.sh 會自己 source 三個 ws。
-5. ZED 第一次開會下載校正檔、建 AI 模型，要有網路且等久一點。
+新筆電只要先裝好 **Ubuntu 24.04** 並連上網路，接著打開終端機，照順序貼上：
+
+```bash
+# 1. 下載這個 repo（一定要放 ~/sensor_rec）
+sudo apt update && sudo apt install -y git
+git clone https://github.com/HsuWayne7/sensor_rec.git ~/sensor_rec
+
+# 2. 安裝顯卡驅動、CUDA 13.0、ROS 2 Jazzy、ZED SDK 5.5.0
+~/sensor_rec/install_base.sh
+#    ZED SDK 自動下載失敗時，改用手上的安裝檔:
+#    ~/sensor_rec/install_base.sh /路徑/ZED_SDK_Ubuntu24_cuda13.0_tensorrt10.13_v5.5.0.zstd.run
+
+# 3. 重開機
+sudo reboot
+
+# 4. 安裝三顆感測器的 driver、光達網路設定
+~/sensor_rec/install.sh
+
+# 5. 測試錄製（光達開機、ZED/T265 直插筆電）
+~/sensor_rec/rec_all.sh test1
+```
+
+- 過程中會問 sudo 密碼。
+- `~/.bashrc` 不需要再加其他東西，rec_all.sh 會自己載入三個 ws。
+- ZED 第一次開機會下載校正檔並建立 AI 模型，需要網路，也要等比較久。
 
 ## 日常同步
 這台改了設定（例如 `zed_set.sh --save`、外參）後：
