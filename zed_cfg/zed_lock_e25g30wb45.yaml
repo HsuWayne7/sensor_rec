@@ -1,0 +1,8 @@
+/**:
+    ros__parameters:
+        video:
+            auto_exposure_gain: false
+            exposure: 25
+            gain: 30
+            auto_whitebalance: false
+            whitebalance_temperature: 45

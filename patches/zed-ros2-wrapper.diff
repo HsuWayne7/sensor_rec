@@ -1,0 +1,15 @@
+diff --git a/zed_wrapper/config/common_stereo.yaml b/zed_wrapper/config/common_stereo.yaml
+index cbd1094..249f597 100644
+--- a/zed_wrapper/config/common_stereo.yaml
++++ b/zed_wrapper/config/common_stereo.yaml
+@@ -119,8 +119,8 @@
+             imu_fusion: true # enable/disable IMU fusion. When set to false, only the optical odometry will be used.
+             publish_tf: true # [overwritten by launch file options] publish `odom -> camera_link` TF
+             publish_map_tf: true # [overwritten by launch file options] publish `map -> odom` TF
+-            map_frame: 'map'
+-            odometry_frame: 'odom'
++            map_frame: 'zed_map'
++            odometry_frame: 'zed_odom'
+             area_memory: true # Enable to detect loop closure
+             area_file_path: '' # Path to the area memory file for relocalization and loop closure in a previously explored environment. 
+             enable_localization_only: false # If true, the camera will only localize in the loaded area memory without updating the map with new information.

@@ -1,0 +1,23 @@
+# 感測器外參: 各 frame 在 base_link (塔底中心) 下的位姿
+# ROS 座標 x 前 y 左 z 上;xyz 公尺,rpy_deg 度 (固定軸 roll-pitch-yaw)。任一值 null = 該筆不發布。
+# rec_all.sh 會發到 /tf_static,並複製一份進 bag 資料夾。來源: 使用者 CAD (2026-11-06)
+#
+# TF 樹: zed_map -> zed_odom -> zed_camera_link -> base_link -> {livox_frame, t265_mount}
+#   zed_camera_link 已經被 ZED 的 odom 帶著跑,所以它對 base_link 的那筆會反過來發
+#   (zed_camera_link -> base_link)。T265 用 t265_mount,因為 t265_link 已經有父 frame t265_odom。
+base: base_link
+attach: zed_camera_link
+frames:
+  zed_camera_link:
+    # CAD: 兩鏡頭中間 (0.033, 0, 0.066) ±1 cm (簡化方塊)。
+    # ZED2 URDF: 鏡頭中心 zed_camera_center = zed_camera_link 往上 0.015 m,且 pitch 0.05 rad (bottom_slope)。
+    # 機身底部水平裝 -> zed_camera_link = (0.033, 0, 0.066-0.015),角度 0
+    xyz: [0.033, 0.0, 0.051]
+    rpy_deg: [0, 0, 0]
+  t265_mount:          # T265 兩鏡頭中間 (= t265_link),CAD 精確
+    xyz: [0.036, 0.0, 0.025]
+    rpy_deg: [0, 0, 0]
+  livox_frame:         # Mid-360 點雲原點 = 機身底部 0.112 + 原點離底部約 0.048 (估計值 ±5 mm)
+    # 估法: 手冊說 IMU 晶片在原點下方 44.12 mm,IMU 板約在底面上方幾 mm -> 原點約離底 48 mm
+    xyz: [0.0, 0.0, 0.160]
+    rpy_deg: [0, 0, 0]

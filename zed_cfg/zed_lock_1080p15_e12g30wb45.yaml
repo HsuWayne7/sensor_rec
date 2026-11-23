@@ -1,0 +1,11 @@
+/**:
+    ros__parameters:
+        general:
+            grab_resolution: 'HD1080'   # 11/21 改 1080p (原本 zed2.yaml 預設 HD720)
+            grab_frame_rate: 15   # 11/21 1080p@30 實測只有 24.5 Hz 會掉幀,改 15
+        video:
+            auto_exposure_gain: false
+            exposure: 12   # 11/21 配合 15fps,實際曝光時間約同 30fps 的 e25
+            gain: 30
+            auto_whitebalance: false
+            whitebalance_temperature: 45
